@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>生徒情報更新</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>生徒情報更新</h1>
+        <form th:action="@{/admin/student/validate-update-input}" method="post" th:object="${studentForm}">
+            <table>
+                <tr>
+                    <th>生徒ID</th>
+                    <td>
+                        <span th:text="*{stId}"></span>
+                        <input type="hidden" th:field="*{stId}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>氏名</th>
+                    <td>
+                        <input type="text" th:field="*{stName}" />
+                        <div th:errors="*{stName}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>生年月日</th>
+                    <td>
+                        <input type="date" th:field="*{stBirth}"/>
+                        <div th:errors="*{stBirth}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>学校名</th>
+                    <td>
+                        <input type="text" th:field="*{stSchool}" />
+                        <div th:errors="*{stSchool}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>所属グループ</th>
+                    <td>
+                        <input type="text" th:field="*{stGroup}" />
+                        <div th:errors="*{stGroup}"></div>
+                    </td>
+                </tr>
+            </table>
+            <div>
+				<input type="submit" name="update" value="更新"/>					
+                <input type="submit" name="delete" value="削除"/>
+            </div>
+            <a th:href="@{/admin/student/display-list}">生徒一覧に戻る</a>
+        </form>
+    </body>
+</html>

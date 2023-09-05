@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>アプリ</title>
+</head>
+<body>
+	<h1>アプリ</h1>
+	
+	<div style="margin: 10px">
+		<p>ようこそ<span sec:authentication="principal.username"></span>さん</p>
+		
+		<form th:action="@{/admin/student/search}" method="post" th:object="${studentSrchForm}">
+			<table>
+				<tbody>
+					<tr>
+						<td>生徒名</td><td><input type="text" th:field="*{name}"></td>
+						<td>ID</td><td><input type="number" th:field="*{id}"/></td>
+					</tr>
+				</tbody>
+				<tfoot align="center">
+					<tr><td colspan="4"><button type="submit">検索</button></td></tr>
+				</tfoot>
+			</table>
+		</form>
+		<p th:if="${decomplete}" th:text="${delcomplete}" style="color:blue"></p>
+		<p th:if="${msg}" th:text="${msg}" style="color:red"></p>
+		<table border="1" th:unless="${#lists.isEmpty(studentList)}" style="table-layout:fixed;">
+			<tr>
+				<th>ID</th>
+				<th>名前</th>
+				<th>学年</th>
+				<th>年齢</th>
+				<th>生年月日</th>
+				<th>学校名</th>
+				<th>グループ名</th>
+				<th>編集</th>
+			</tr>
+			<tr th:each="obj : ${studentList}" align="center" >
+				<td th:text="${obj.stId}"></td>
+				<td th:text="${obj.stName}" ></td>
+				<td th:text="${obj.stGrade}" ></td>
+				<td th:text="${obj.stAge}" ></td>
+				<td th:text="${obj.stBirth}" ></td>
+				<td th:text="${obj.stSchool}"></td>
+				<td th:text="${obj.stGroup}"></td>
+				<td>
+					<form method="GET" th:action="@{/admin/student/display-list/{id}(id=${obj.stId})}">
+						<input type="submit" value="編集">
+					</form>
+				</td>
+			</tr>
+		</table>
+		<p th:if="${#lists.isEmpty(studentList)}">登録されてません。</p>
+				
+		
+	</div>
+	
+</body>
+</html>

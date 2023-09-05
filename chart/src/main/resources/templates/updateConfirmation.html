@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <title>生徒情報更新</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>生徒情報更新</h1>
+        <form th:action="@{/admin/student/update}" method="post" th:object="${studentForm}">
+            <table>
+                <tr>
+                    <th>生徒ID</th>
+                    <td>
+                        <span th:text="*{stId}"></span>
+                        <input type="hidden" th:field="*{stId}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>氏名</th>
+                    <td>
+						<span th:text="*{stName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>生年月日</th>
+                    <td>
+						<span th:text="*{stBirth}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>学校名</th>
+                    <td>
+                        <span th:text="*{stSchool}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>所属グループ</th>
+                    <td>
+                        <span th:text="*{stGroup}"></span>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                  <input type="hidden" th:field="*{stId}"/>
+				  <input type="hidden" th:field="*{stName}"/>
+				  <input type="hidden" th:field="*{stBirth}"/>
+				  <input type="hidden" th:field="*{stSchool}"/>
+				  <input type="hidden" th:field="*{stGroup}"/>
+				
+				  <input type="submit" name="correct" value="戻る"/>
+				  <input type="submit" name="update" value="更新"/>
+            </div>
+
+        </form>
+    </body>
+</html>

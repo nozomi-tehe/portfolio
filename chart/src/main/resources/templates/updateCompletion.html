@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>生徒情報更新完了</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>生徒情報更新完了</h1>
+        <div th:if="${studentForm.stId != null}">更新した生徒「<span th:text="${studentForm.stId}"></span> : <span th:text="${studentForm.stName}"></span>」</div>
+        <a th:href="@{/admin/student/display-list}">生徒情報一覧に戻る</a>
+    </body>
+</html>
