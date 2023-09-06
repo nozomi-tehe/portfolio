@@ -106,7 +106,7 @@ public class StudentController {
 		if (studentSrchForm.getId() != null) {
 			Student student = studentService.findById(studentSrchForm.getId());
 			students.add(student);
-		}else if (studentSrchForm.getName().equals("") ) {
+		}else if (!(studentSrchForm.getName().equals("")) ) {
 			students = studentService.findByName(studentSrchForm.getName());
 		}else {
 			return "redirect:/admin/student/display-list";

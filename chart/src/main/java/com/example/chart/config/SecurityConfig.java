@@ -2,23 +2,49 @@ package com.example.chart.config;
 
 
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+import lombok.RequiredArgsConstructor;
+
+
 @EnableWebSecurity
+@Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+	
+	private final PasswordEncoder passwordEncoder;
+
+	private final UserDetailsService userDetailsService;
+	
+	private final MessageSource messageSource;
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(authz -> authz
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		/**
+		http
+		.authorizeHttpRequests(
+				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/").permitAll()
-                //.requestMatchers("/manager").hasRole("MANAGER")
-                //.requestMatchers("/admin").hasRole("ADMIN")
+                .anyRequest().authenticated())
+		.formLogin(
+				login -> login.loginProcessingUrl("/login")
+						.loginPage("/login") // 自作ログイン画面(Controller)を使うための設定
+						.usernameParameter("loginId") // ユーザ名パラメータのname属性
+						.defaultSuccessUrl("/admin/student/display-list")); // ログイン成功後のリダイレクトURL
+
+		return http.build();
+		*/
+
+		http.authorizeHttpRequests(authz -> authz
+                .requestMatchers("/logiin").permitAll()
                 .anyRequest().authenticated()
 		).formLogin(login -> login
                 .loginProcessingUrl("/login")
@@ -35,7 +61,18 @@ public class SecurityConfig {
          );
 		return http.build();
 
+
     }
+	
+	@Bean
+	AuthenticationProvider daoAuthenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setMessageSource(messageSource);
+
+		return provider;
+	}
 	
 	/**
 	@Bean

@@ -1,7 +1,6 @@
 package com.example.chart.controller;
 
-import org.springframework.context.MessageSource;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +21,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthPageController {
 	
-	private final PasswordEncoder passwordEncoder;
-	
-	private final MessageSource messageSource;
-	
 	private final HttpSession session;
 	
 	/**
@@ -35,7 +30,6 @@ public class AuthPageController {
 	@GetMapping("/login")
 	public String loginForm(Model model,LoginForm loginForm) {
 		return "loginForm";
-	
 	}
 	
 	
@@ -43,7 +37,7 @@ public class AuthPageController {
 	public String loginFormWithError(Model model, LoginForm form) {
 		Exception errorInfo = (Exception)session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		model.addAttribute("errorMsg",errorInfo.getMessage());
-		return "login";		
+		return "loginForm";		
 	}
 	
 	
