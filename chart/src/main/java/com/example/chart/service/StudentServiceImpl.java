@@ -42,13 +42,18 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student findById(Integer StId) {
+	public List<Student> findById(Integer StId) {
 		return studentRepository.selectById(StId);
 	}
 
 	@Override
-	public List<Student> findByName(String StId) {
-		return studentRepository.selectByName(StId);
+	public List<Student> findByName(String StName) {
+		return studentRepository.selectByName(StName);
+	}
+
+	@Override
+	public Student findOneById(Integer stId) {
+		return studentRepository.selectOneById(stId);
 	}
 	
 	

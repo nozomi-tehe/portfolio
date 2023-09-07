@@ -2,10 +2,10 @@
 <html xmls:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>アプリ</title>
+<title>生徒情報一覧</title>
 </head>
 <body>
-	<h1>アプリ</h1>
+	<h1>生徒情報一覧</h1>
 	
 	<div style="margin: 10px">
 		<p>ようこそ<span sec:authentication="principal.username"></span>さん</p>
@@ -51,10 +51,8 @@
 				</td>
 			</tr>
 		</table>
-		<p th:if="${#lists.isEmpty(studentList)}">登録されてません。</p>
+		<p th:if="${#lists.isEmpty(studentList)}">該当するデータがありません。</p>
 				
-		
 	</div>
-	
 </body>
 </html>

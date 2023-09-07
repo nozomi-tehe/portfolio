@@ -11,9 +11,10 @@ public interface StudentRepository {
 	boolean update(Student student);
 	boolean delete(Integer stId);
 	
-    Student selectById(Integer StId);
+	List<Student> selectById(Integer StId);
     List<Student> selectByName(String StName);
     List<Student> selectAll();
+    Student selectOneById(Integer StId);
 	
 
 }

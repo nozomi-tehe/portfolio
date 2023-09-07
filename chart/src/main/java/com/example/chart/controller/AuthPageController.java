@@ -32,14 +32,11 @@ public class AuthPageController {
 		return "loginForm";
 	}
 	
-	
 	@GetMapping(value = "/login", params = "error")
 	public String loginFormWithError(Model model, LoginForm form) {
 		Exception errorInfo = (Exception)session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		model.addAttribute("errorMsg",errorInfo.getMessage());
 		return "loginForm";		
 	}
-	
-	
 
 }

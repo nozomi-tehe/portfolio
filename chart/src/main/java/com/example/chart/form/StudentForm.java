@@ -26,6 +26,8 @@ public class StudentForm {
 	private int stAge;
 	private String stGrade;
 	
+	private String loginId;
+	
 	public Integer getStId() {
 		return stId;
 	}
@@ -68,8 +70,18 @@ public class StudentForm {
 	public void setStGrade(String stGrade) {
 		this.stGrade = stGrade;
 	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(int stId) {
+		
+		this.loginId = String.format("%03d",stId);
+	}
 	
-	//生徒の生年月日から年齢と学年を計算する
+	/**
+	 * 保持している生年月日から年齢と学年を計算し保持する
+	 */
 	public void setAgeGrade() {
 		LocalDate localBirthdate = getStBirth();
 		LocalDate nowDate = LocalDate.now();

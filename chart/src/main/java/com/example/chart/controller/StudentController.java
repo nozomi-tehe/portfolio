@@ -59,13 +59,14 @@ public class StudentController {
 	
 	@GetMapping("/display-list/{stId}")
 	public String displayUpdate(@PathVariable Integer stId, Model model) {
-		Student student = studentService.findById(stId);
+		Student student = studentService.findOneById(stId);
 		StudentForm studentForm = new StudentForm();
 		studentForm.setStId(student.getStId());
 		studentForm.setStName(student.getStName());
 		studentForm.setStBirth(student.getStBirth());
 		studentForm.setStGroup(student.getStGroup());
 		studentForm.setStSchool(student.getStSchool());
+		studentForm.setLoginId(student.getStId());
 		model.addAttribute("studentForm",studentForm);
 		return "updateForm";
 	}
@@ -104,8 +105,7 @@ public class StudentController {
 		
 		List<Student> students = new ArrayList<>();
 		if (studentSrchForm.getId() != null) {
-			Student student = studentService.findById(studentSrchForm.getId());
-			students.add(student);
+			students = studentService.findById(studentSrchForm.getId());
 		}else if (!(studentSrchForm.getName().equals("")) ) {
 			students = studentService.findByName(studentSrchForm.getName());
 		}else {

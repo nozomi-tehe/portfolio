@@ -62,9 +62,15 @@ public class JdbcStudentRepository implements StudentRepository {
 	}
 	
 	//検索系
+	
 	@Override
-	public Student selectById(Integer stId) {
+	public Student selectOneById(Integer stId) {
 		return jdbcTemplate.queryForObject("SELECT * FROM students WHERE st_id=?", new DataClassRowMapper<>(Student.class), stId);
+	}
+	
+	@Override
+	public List<Student> selectById(Integer stId) {
+		return jdbcTemplate.query("SELECT * FROM students WHERE st_id=?", new DataClassRowMapper<>(Student.class), stId);
 	}
 	
 	@Override

@@ -11,8 +11,9 @@ public interface StudentService {
 	void deleteStudentById(Integer StId);
 	
 	List<Student> findAll();
-    Student findById(Integer StId);
+	List<Student> findById(Integer StId);
     List<Student> findByName(String StId);
+	Student findOneById(Integer stId);
 
 
 }

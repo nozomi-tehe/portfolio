@@ -16,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	private final UserInfoRepository repository;
-	
-
 
 	/**
 	 * ユーザー情報生成
