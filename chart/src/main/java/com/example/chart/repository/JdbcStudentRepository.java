@@ -20,14 +20,12 @@ public class JdbcStudentRepository implements StudentRepository {
     //更新系
     @Override
 	public void insert(Student student) {
-		jdbcTemplate.update("INSERT INTO students (st_name,st_birth,st_group,st_school) VALUES (?, ?, ?, ?)",
-
+		jdbcTemplate.update("INSERT INTO students (st_name,st_birth,st_school,st_group) VALUES (?, ?, ?, ?)",
                 student.getStName(),
                 student.getStBirth(),
                 student.getStSchool(),
                 student.getStGroup()
                 );
-
 	}
 
 	@Override

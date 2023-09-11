@@ -19,8 +19,7 @@ public class StudentServiceImpl implements StudentService{
 	//登録更新系
 	@Override
 	public void insertStudent(Student student) {
-		// TODO 自動生成されたメソッド・スタブ
-		
+		studentRepository.insert(student);
 	}
 
 	@Override

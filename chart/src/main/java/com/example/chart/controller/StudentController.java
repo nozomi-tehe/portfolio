@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.chart.constant.ButtonConst;
 import com.example.chart.entity.Student;
 import com.example.chart.form.StudentForm;
 import com.example.chart.form.StudentSrchForm;
@@ -28,7 +29,8 @@ import com.example.chart.service.StudentService;
 public class StudentController {
 	
 
-	private final StudentService studentService ;
+	private final StudentService studentService;
+	
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
 	}
@@ -71,28 +73,68 @@ public class StudentController {
 		return "updateForm";
 	}
 	
-	@PostMapping(value = "/validate-update-input" ,params = "update")
-	public String validateUpdateForm(@Validated StudentForm studentForm, BindingResult bindResult) {
+	@GetMapping("/validate-insert-input")
+	public String validateInsertForm(Model model) {
+		StudentForm studentForm = new StudentForm();
+		model.addAttribute("studentForm",studentForm);
+		model.addAttribute("buttoned",ButtonConst.BUTTON_NEW);
+		return "insertForm";
+	}
+	
+	@PostMapping(value = "/validate-update-input" ,params = ButtonConst.BUTTON_NEW)
+	public String validateInsertForm(@Validated StudentForm studentForm, BindingResult bindResult,Model model) {
 		if (bindResult.hasErrors()) {
-			return "updateForm";
+			return "insertForm";
 		}
+		model.addAttribute("buttoned",ButtonConst.BUTTON_NEW);
 		return "updateConfirmation";
 	}
 	
-	@PostMapping(value = "/update" , params = "update")
-	public String doUpdate(@Validated StudentForm studentForm) {
+	@PostMapping(value = "/validate-update-input" ,params = ButtonConst.BUTTON_UPDATE)
+	public String validateUpdateForm(@Validated StudentForm studentForm, BindingResult bindResult,Model model) {
+		if (bindResult.hasErrors()) {
+			return "updateForm";
+		}
+		model.addAttribute("buttoned",ButtonConst.BUTTON_UPDATE);
+		return "updateConfirmation";
+	}
+	
+	@PostMapping(value = "/validate-update-input" ,params = ButtonConst.BUTTON_DELETE)
+	public String validateDeleteForm(@Validated StudentForm studentForm, BindingResult bindResult,Model model) {
+		if (bindResult.hasErrors()) {
+			return "updateForm";
+		}
+		model.addAttribute("buttoned",ButtonConst.BUTTON_DELETE);
+		return "updateConfirmation";
+	}
+	
+	
+	@PostMapping(value = "/update" , params = ButtonConst.BUTTON_UPDATE)
+	public String doUpdate(@Validated StudentForm studentForm,Model model) {
 		studentService.updateStudent(studentForm.toEntity());
+		model.addAttribute("buttoned",ButtonConst.BUTTON_UPDATE);
 		return "updateCompletion";
 	}
 	
-	@PostMapping(value = "/update" , params = "correct")
-	public String correct(@Validated StudentForm studentForm) {
-		return "updateForm";
+	@PostMapping(value = "/update" , params = ButtonConst.BUTTON_DELETE)
+	public String doDelete(@Validated StudentForm studentForm,Model model) {
+		Student student = studentForm.toEntity();
+		studentService.deleteStudentById(student.getStId());
+		model.addAttribute("buttoned",ButtonConst.BUTTON_DELETE);
+		return "updateCompletion";
 	}
 	
-	@PostMapping(value = "/validate-update-input" ,params = "delete")
-	public String validateDeleteForm(@Validated StudentForm studentForm) {
-		return "deleteConfirmation";
+	@PostMapping(value = "/update" , params = ButtonConst.BUTTON_NEW)
+	public String doInsert(@Validated StudentForm studentForm,Model model) {
+		Student student = studentForm.toEntity();
+		studentService.insertStudent(student);
+		model.addAttribute("buttoned",ButtonConst.BUTTON_NEW);
+		return "updateCompletion";
+	}
+	
+	@PostMapping(value = "/update" , params = ButtonConst.BUTTON_BACK)
+	public String back(@Validated StudentForm studentForm) {
+		return "updateForm";
 	}
 	
 	@PostMapping("/search")
@@ -128,6 +170,14 @@ public class StudentController {
         model.addAttribute("studentList", studentForms);
         return "studentList";
     }
+	
+	/**
+	@GetMapping("/auth-set/{loginId}")
+	public String authInsert(@PathVariable Integer loginId, Model model) {
+		
+		return "updateForm";
+	}
+	*/
 	
 	
 
