@@ -3,8 +3,10 @@ package com.example.chart.form;
 @SuppressWarnings("serial")
 public class StudentSrchForm {
 	
-
+	/** 生徒ID */
 	private Integer id;
+	
+	/** 生徒名 */
 	private String name;
 	
 	public Integer getId() {

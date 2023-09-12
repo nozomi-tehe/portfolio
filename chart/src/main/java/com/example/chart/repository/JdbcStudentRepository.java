@@ -30,8 +30,7 @@ public class JdbcStudentRepository implements StudentRepository {
 
 	@Override
 	public boolean update(Student student) {
-		int count = jdbcTemplate.update("UPDATE students SET st_name=?,st_birth=?,st_school=?,st_group=? WHERE st_id=?",
-				
+		int count = jdbcTemplate.update("UPDATE students SET st_name=?,st_birth=?,st_school=?,st_group=? WHERE st_id=?",	
 				student.getStName(),
 				student.getStBirth(),
 				student.getStSchool(),
@@ -43,12 +42,11 @@ public class JdbcStudentRepository implements StudentRepository {
     	}else {
     		return false;
     	}
-		
 	}
 
 	@Override
 	public boolean delete(Integer stId) {
-		int count = jdbcTemplate.update("DELETE FROM students WHERE stId=?,stName=?",
+		int count = jdbcTemplate.update("DELETE FROM students WHERE st_id=?",
 				stId
 				);
 		if (count != 0) {
@@ -60,7 +58,6 @@ public class JdbcStudentRepository implements StudentRepository {
 	}
 	
 	//検索系
-	
 	@Override
 	public Student selectOneById(Integer stId) {
 		return jdbcTemplate.queryForObject("SELECT * FROM students WHERE st_id=?", new DataClassRowMapper<>(Student.class), stId);

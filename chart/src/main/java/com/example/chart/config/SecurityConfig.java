@@ -13,9 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 
-
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
@@ -27,9 +26,10 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-		http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("/logiin").permitAll()
+		
+		http
+		.authorizeHttpRequests(authz -> authz
+                .requestMatchers("/login").permitAll()
                 .anyRequest().authenticated()
 		).formLogin(login -> login
                 .loginProcessingUrl("/login")
@@ -45,7 +45,6 @@ public class SecurityConfig {
 		
          );
 		return http.build();
-
     }
 	
 	@Bean
@@ -54,7 +53,6 @@ public class SecurityConfig {
 		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setMessageSource(messageSource);
-
 		return provider;
 	}
 	

@@ -13,19 +13,32 @@ import jakarta.validation.constraints.Past;
 @SuppressWarnings("serial")
 public class StudentForm {
 	
+	/** 生徒ID */
 	private Integer stId;
+	
+	/** 生徒名 */
 	@NotBlank
 	private String stName;
+	
+	/** 生年月日 */
 	@NotNull
 	@Past
 	@DateTimeFormat(iso =DateTimeFormat.ISO.DATE)
 	private LocalDate stBirth;
+	
+	/** 学校名 */
 	private String stSchool;
+	
+	/** グループ名 */
 	private Integer stGroup;
 	
+	/** 年齢 */
 	private int stAge;
+	
+	/** 学年 */
 	private String stGrade;
 	
+	/** ログインID */
 	private String loginId;
 	
 	public Integer getStId() {
@@ -74,13 +87,13 @@ public class StudentForm {
 	public String getLoginId() {
 		return loginId;
 	}
-	public void setLoginId(int stId) {
-		
-		this.loginId = String.format("%03d",stId);
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	
+	
 	/**
-	 * 保持している生年月日から年齢と学年を計算し保持する
+	 * 生年月日から年齢と学年を計算し保持する
 	 */
 	public void setAgeGrade() {
 		LocalDate localBirthdate = getStBirth();
@@ -97,32 +110,32 @@ public class StudentForm {
 		
 		LocalDate first = LocalDate.of(localBirthdate.getYear(), 4, 1);
 		if (first.isAfter(localBirthdate)) {
-			//誕生年の4月1日が誕生日よりも後なら、年度初日は1年前の4月1日
+			//誕生年の4月1日が誕生日よりも後なら(早生まれ)、年度初日は1年前の4月1日
 			first = first.minusYears(1);
 		}
 		
 		LocalDate nowYear = LocalDate.of(nowDate.getYear(), 4, 1);
 		if (nowYear.isAfter(nowDate)) {
-			//現在が1.2.3月なら現在の年度は一年前
+			//現在が1.2.3月なら去年度で計算
 			nowYear = nowYear.minusYears(1);
 		}
 		
-		int grade = (nowYear.getYear())-(first.getYear())-1;
+		int grade = (nowYear.getYear())-(first.getYear());
 		String schoolGrade = "未計算";
 		
-		if (grade < 6) {
+		if (grade <= 6) {
 			schoolGrade = "未就学";
-		}else if (grade <12) {
-			grade -= 5;
+		}else if (grade <=12) {
+			grade -= 6;
 			schoolGrade = "小学"+ grade + "年";
-		}else if (grade <15) {
-			grade -= 11;
+		}else if (grade <=15) {
+			grade -= 12;
 			schoolGrade = "中学"+ grade + "年";
-		}else if (grade <18) {
-			grade -= 14;
+		}else if (grade <=18) {
+			grade -= 15;
 			schoolGrade = "高校"+ grade + "年";
-		}else if (grade <18) {
-			grade -= 17;
+		}else if (grade <=21) {
+			grade -= 18;
 			schoolGrade = "大学"+ grade + "年";
 		}else {
 			schoolGrade = "既卒";
@@ -132,7 +145,11 @@ public class StudentForm {
 		
 	}
 
-	
+	/**
+	 * formをentityに詰め替えて返す
+	 *
+	 * @return 生徒Entity
+	 */
 	public Student toEntity() {
 		Student student = new Student();
 		student.setStId(this.getStId());

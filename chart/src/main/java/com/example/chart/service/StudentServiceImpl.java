@@ -10,6 +10,7 @@ import com.example.chart.repository.StudentRepository;
 @Service
 public class StudentServiceImpl implements StudentService{
 	
+	/** 生徒情報テーブルDAO */
 	private final StudentRepository studentRepository;
 	
 	public StudentServiceImpl(StudentRepository studentRepository) {
@@ -29,9 +30,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public void deleteStudentById(Integer StId) {
-		// TODO 自動生成されたメソッド・スタブ
-		
+	public void deleteStudentById(Integer stId) {
+		studentRepository.delete(stId);
 	}
 	
 	//検索系

@@ -47,6 +47,7 @@
                     <th>ログインID</th>
                     <td>
                         <span th:text="*{loginId}"></span>
+                        <input type="hidden" th:field="*{loginId}" />
                     </td>
                 </tr>
             </table>
@@ -55,9 +56,8 @@
                 <input type="submit" name="削除" value="削除"/>
             </div>
             <a th:href="@{/admin/student/display-list}">生徒一覧に戻る</a>
-            
         </form>
-        <form method="GET" th:action="@{/admin/student/auth-set/{id}(id=${obj.loginId})}">
+        <form method="GET" th:action="@{/admin/student/auth-set/{loginId}(loginId=${studentForm.loginId})}">
 			<input type="submit" value="パスワードを発行する">
 		</form>
     </body>

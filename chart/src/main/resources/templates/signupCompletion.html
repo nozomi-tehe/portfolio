@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>パスワード発行完了</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>パスワード発行完了</h1>
+        <table border="1" th:unless="${#lists.isEmpty(signupInfo)}" style="table-layout:fixed;">
+			<tr>パスワード発行済み</tr>
+		</table>
+		<p th:if="${#lists.isEmpty(signupInfo)}">該当するデータがありません。</p>
+        
+        <a th:href="@{/admin/student/display-list}">生徒情報一覧に戻る</a>
+    </body>
+</html>

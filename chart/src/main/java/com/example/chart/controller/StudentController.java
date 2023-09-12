@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.chart.constant.ButtonConst;
 import com.example.chart.entity.Student;
+import com.example.chart.form.SignupForm;
 import com.example.chart.form.StudentForm;
 import com.example.chart.form.StudentSrchForm;
+import com.example.chart.service.SignupService;
 import com.example.chart.service.StudentService;
 
 /**
- * 
- * 
- * @author 3030627
- *
+ * 生徒DB操作Controller
  */
 @Controller
 @RequestMapping("/admin/student")
 public class StudentController {
 	
-
 	private final StudentService studentService;
+	private final SignupService signupService;
 	
-	public StudentController(StudentService studentService) {
+	public StudentController(StudentService studentService, SignupService signupService) {
 		this.studentService = studentService;
+		this.signupService = signupService;
 	}
 	
 	@GetMapping("/display-list")
@@ -68,7 +68,7 @@ public class StudentController {
 		studentForm.setStBirth(student.getStBirth());
 		studentForm.setStGroup(student.getStGroup());
 		studentForm.setStSchool(student.getStSchool());
-		studentForm.setLoginId(student.getStId());
+		studentForm.setLoginId(String.format("%03d",student.getStId()));
 		model.addAttribute("studentForm",studentForm);
 		return "updateForm";
 	}
@@ -171,13 +171,23 @@ public class StudentController {
         return "studentList";
     }
 	
-	/**
+	
 	@GetMapping("/auth-set/{loginId}")
-	public String authInsert(@PathVariable Integer loginId, Model model) {
+	public String authInsert(@PathVariable String loginId, Model model) {
 		
-		return "updateForm";
+		SignupForm signupForm = new SignupForm(); 
+		signupForm.setLoginId(loginId);
+		signupForm.setPassword(loginId);
+		signupForm.setUserId(Integer.parseInt(loginId));
+		
+		var userInfoOpt = signupService.resistUserInfo(signupForm);
+		if (userInfoOpt.isPresent()) {
+			model.addAttribute("signupInfo", userInfoOpt);
+		}
+		return "signupCompletion";
 	}
-	*/
+	
+	
 	
 	
 

@@ -15,5 +15,4 @@ public interface StudentService {
     List<Student> findByName(String StId);
 	Student findOneById(Integer stId);
 
-
 }
