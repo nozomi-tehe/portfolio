@@ -38,4 +38,4 @@ Viewの基本
 ## 文責
 
 * 作成者：安本侑真
-* E-mail：tehepero0217@icloud.com
+* E-mail：nozmth@gmail.com
