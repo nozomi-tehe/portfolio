@@ -3,10 +3,12 @@ package com.example.chart.form;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.chart.entity.Student;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -18,6 +20,7 @@ public class StudentForm {
 	
 	/** 生徒名 */
 	@NotBlank
+	@Length(max=12)
 	private String stName;
 	
 	/** 生年月日 */
@@ -27,9 +30,11 @@ public class StudentForm {
 	private LocalDate stBirth;
 	
 	/** 学校名 */
+	@Length(max=12)
 	private String stSchool;
 	
 	/** グループ名 */
+	@Max(3)
 	private Integer stGroup;
 	
 	/** 年齢 */

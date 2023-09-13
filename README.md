@@ -4,6 +4,8 @@ JavaとSpringの学習時に作成したアプリのソースコードを公開�
 
 H2データベースの設定ができていない為、コーディングレベルの確認にご覧いただければ幸いです。
 
+[![portfolio動作確認](./images/portfolio.png)](https://www.youtube.com/watch?v=mVqHKhwNhnE)
+
 ## Springを用いた実装機能
 
 ログイン機能
